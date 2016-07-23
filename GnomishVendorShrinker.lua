@@ -5,6 +5,7 @@ local myname, ns = ...
 local ItemSearch = LibStub('LibItemSearch-1.0')
 
 local NUMROWS, ICONSIZE, GAP, SCROLLSTEP = 14, 17, 4, 5
+local CURRENCYSCALE, NAMEFONT, PRICEFONT = 1, "GameFontNormalSmall",  "NumberFontNormalSmall"
 
 
 for _,f in pairs{MerchantNextPageButton, MerchantPrevPageButton, MerchantPageText} do
@@ -117,14 +118,14 @@ local function GetAltCurrencyFrame(frame)
 
 	local anchor = #frame.altframes > 0 and frame.altframes[#frame.altframes].text
 	local f = CreateFrame('Frame', nil, frame)
-	f:SetWidth(ICONSIZE) f:SetHeight(ICONSIZE)
+	f:SetWidth(ICONSIZE * CURRENCYSCALE) f:SetHeight(ICONSIZE * CURRENCYSCALE)
 	f:SetPoint("RIGHT", anchor or frame.ItemPrice, "LEFT")
 
 	f.icon = f:CreateTexture()
-	f.icon:SetWidth(ICONSIZE) f.icon:SetHeight(ICONSIZE)
+	f.icon:SetWidth(ICONSIZE * CURRENCYSCALE) f.icon:SetHeight(ICONSIZE * CURRENCYSCALE)
 	f.icon:SetPoint("RIGHT")
 
-	f.text = f:CreateFontString(nil, nil, "NumberFontNormalSmall")
+	f.text = f:CreateFontString(nil, nil, PRICEFONT)
 	f.text:SetPoint("RIGHT", f.icon, "LEFT", -GAP/2, 0)
 
 	f.SetValue = SetValue
@@ -187,7 +188,7 @@ for i=1,NUMROWS do
 	row.icon = icon:CreateTexture(nil, "BORDER")
 	row.icon:SetAllPoints()
 
-	local ItemName = row:CreateFontString(nil, nil, "GameFontNormalSmall")
+	local ItemName = row:CreateFontString(nil, nil, NAMEFONT)
 	ItemName:SetPoint('LEFT', icon, "RIGHT", GAP, 0)
 	ItemName:SetJustifyH('LEFT')
 	row.ItemName = ItemName
